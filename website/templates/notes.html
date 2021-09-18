@@ -1,0 +1,42 @@
+{%extends "layout.html"%}
+{%block content%}
+    <h1>Notes</h1>
+    
+    <table>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>Notes</th>
+        </tr>
+        {%for note in user.notes%}
+        <tr>
+            
+            <td>
+                {{note.id}}
+            </td>
+            <td>
+                {{note.notes}}
+            </td>
+            <td>
+            <form action="{{url_for('delete',id=note.id)}}" method='POST'>
+                <button type="submit" value='submit' class=danger>Delete</button>
+            </form>
+            </td>
+            
+        </tr>
+        {%endfor%}
+
+    </table>
+
+    
+    <body>
+        <form method='POST' action='/notes'>
+            <label for=notes>Notes:</label>
+            <textarea name=notes id=notes ></textarea>
+            <input type="submit" value="Add">
+        </form>
+        
+        
+    </body>
+{%endblock%}
