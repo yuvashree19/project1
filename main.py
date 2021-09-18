@@ -122,12 +122,9 @@ def delete(id):
         return redirect(url_for('notes'))
 @app.route('/gallery')
 def gallery():
-    for files in os.walk("C:\\Users\\Yuvashree\\Desktop\\web app\\static\\images"):
-     print(files)
-    for file in files:
-        print(file)
-    
-    return render_template('gallery.html',path=file,user=current_user)
+    named= os.path.dirname(__file__)
+    folder = os.path.join(named, "static//images")
+    return render_template('gallery.html',path=os.listdir(folder),user=current_user)
 
 
 if __name__=='__main__':
