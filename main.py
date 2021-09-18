@@ -122,7 +122,7 @@ def delete(id):
         return redirect(url_for('notes'))
 @app.route('/gallery')
 def gallery():
-    for files in os.walk("C:\\Users\\Yuvashree\\Desktop\\web app\\website\\static\\images"):
+    for files in os.walk("C:\\Users\\Yuvashree\\Desktop\\web app\\static\\images"):
      print(files)
     for file in files:
         print(file)
