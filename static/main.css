@@ -1,0 +1,66 @@
+.button{
+    background-color:aqua;
+    color:rgb(10, 0, 0);
+    text-align: center;
+    border: hidden;}
+.alert-success{
+    background-color: rgb(166, 245, 87);
+    color:black;
+}
+.alert-danger{
+    background-color:lightpink;
+    color:maroon;
+}
+.list{
+    background-color: aqua;
+    color:black;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-style:dotted;
+
+}
+.danger{
+    background-color: rgb(212, 9, 9);
+    color:black
+    
+}
+* {
+    box-sizing: border-box;
+    
+  }
+  
+.column {
+    float:left;
+    width: 33.33%;
+    padding:5px;
+    background-color:lavender;
+  }
+  
+  /* Clearfix (clear floats) */
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+.download{
+    background-color: midnightblue;
+    color:snow;
+    float:right;
+}
+.quote{
+    background-color:papayawhip;
+    color:rgb(1, 1, 15);
+    border-style:inset;
+    border-width:2px;
+    border-color: purple;
+    margin-top: 50px;
+    margin-left: 220px;
+    margin-right: 350px;
+    font-family: cursive;
+    font-size:20px;
+    text-shadow:2px 1px;
+}
+body{
+    background-color: lavender;
+}
+
+

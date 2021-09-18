@@ -1,0 +1,12 @@
+{%extends "layout.html"%}
+{%block content%}
+    <h1>
+        Posts
+    </h1>
+    <body>
+        <form method='POST' action='/posts'>
+            Title:<input type='text' name='title' id='title'>
+            <input type="submit" value="Post">
+        </form>
+    </body>
+{%endblock%}
