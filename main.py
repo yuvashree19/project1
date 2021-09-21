@@ -128,6 +128,7 @@ def gallery():
 
 @app.route('/cgpa',methods=['GET','POST'])
 def cgpa():
-    return render_template('calculator.html',user=current_user)
+    return render_template('calculator.html')
 if __name__=='__main__':
     app.run(debug=True)
+    
