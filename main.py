@@ -128,7 +128,13 @@ def gallery():
 
 @app.route('/cgpa',methods=['GET','POST'])
 def cgpa():
-    return render_template('calculator.html')
+    if request.method=='POST':
+        regulation=request.form.get('regulation')
+        if regulation=='Reg2017':
+            return redirect(url_for('home'))
+        else:
+            return redirect(url_for('notes'))
+    return render_template('calculator.html',user=current_user)
 if __name__=='__main__':
     app.run(debug=True)
     
