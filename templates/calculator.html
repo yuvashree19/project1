@@ -1,12 +1,33 @@
 {%extends "layout.html"%}
 {%block content%}
     <h1>
-        Posts
+        CGPA calculator
     </h1>
     <body>
-        <form method='POST' action='/posts'>
-            Title:<input type='text' name='title' id='title'>
-            <input type="submit" value="Post">
+        <form method='POST' action='/cgpa'>
+            Regulation:<select id='regulation' name='regulation'>
+                <option value='Reg2013'>Reg 2013</option>
+                <option value='Reg2017'>Reg 2017</option>
+            </select><br><br>
+            Department:<select id='department' name='department'>
+                <option value='ECE'>ECE</option>
+                <option value='EEE'>EEE</option>
+                <option value='CSE'>CSE</option>
+                <option value='IT'>IT</option>
+                <option value='CIVIL'>CIVIL</option>
+            </select><br><br>
+            Semester:<select id='semester' name='semester'>
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+                <option value='4'>4</option>
+                <option value='5'>5</option>
+                <option value='6'>6</option>
+                <option value='7'>7</option>
+                <option value='8'>8</option>
+            
+            </select><br><br>
+            <input type="submit" value="Submit">
         </form>
     </body>
 {%endblock%}
