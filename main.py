@@ -126,6 +126,8 @@ def gallery():
     folder = os.path.join(named, "static//images")
     return render_template('gallery.html',path=os.listdir(folder),user=current_user)
 
-
+@app.route('/cgpa',methods=['GET','POST'])
+def cgpa():
+    return render_template('calculator.html',user=current_user)
 if __name__=='__main__':
     app.run(debug=True)
