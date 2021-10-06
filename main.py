@@ -77,7 +77,7 @@ def register():
             new_user=User(name=name,email=email,password=generate_password_hash(password1,method='sha256'))
             db.session.add(new_user)
             db.session.commit()
-            login_user(user,remember=False)
+            
             flash('Account created!',category='success')
             return redirect(url_for('home'))
     return render_template('register.html',title='register page',user=current_user)
@@ -135,6 +135,11 @@ def cgpa():
         else:
             return redirect(url_for('notes'))
     return render_template('calculator.html',user=current_user)
+
+@app.route('/profile',methods=['GET','POST'])
+def profile():
+    return render_template('profile.html')
+
 if __name__=='__main__':
     app.run(debug=True)
     
