@@ -6,7 +6,9 @@ from flask_login import UserMixin
 from flask_login import login_user,logout_user,current_user,login_required
 from flask_login import LoginManager
 from PIL import Image
+from werkzeug.utils import secure_filename
 import os
+import secrets
 import glob
 db=SQLAlchemy()
 DB_NAME='web_app'
@@ -21,7 +23,9 @@ class User(db.Model,UserMixin):
     name=db.Column(db.String(100),nullable=True)
     email=db.Column(db.String(100),unique=True)
     password=db.Column(db.String(100))
+    profile=db.Column(db.String(20),unique=True,nullable=False,default='default.jpg')
     notes=db.relationship('Notes')
+    
 class Notes(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     notes=db.Column(db.Text(5000000))
@@ -77,7 +81,7 @@ def register():
             new_user=User(name=name,email=email,password=generate_password_hash(password1,method='sha256'))
             db.session.add(new_user)
             db.session.commit()
-            
+            login_user(new_user)
             flash('Account created!',category='success')
             return redirect(url_for('home'))
     return render_template('register.html',title='register page',user=current_user)
@@ -135,11 +139,24 @@ def cgpa():
         else:
             return redirect(url_for('notes'))
     return render_template('calculator.html',user=current_user)
+def save_picture(form_picture):
+    random_hex=secrets.token_hex(8)
+    filename,fileextension=os.path.splitext(form_picture.filename)
+    picture_filename=random_hex+fileextension
+    picture_path=os.path.join(app.root_path,'static/profile_images',picture_filename)
+    form_picture.save(picture_path)
+    return picture_filename
 
 @app.route('/profile',methods=['GET','POST'])
 def profile():
-    return render_template('profile.html')
+    if request.method=='POST':
+        picture=request.files['profile']
+        picture_file=save_picture(picture.data)
+        current_user.profile=picture_file
+        db.commit()
+    elif request.method=='GET':
+        img=url_for('static',filename='images/'+ current_user.profile)
+    return render_template('profile.html', user=current_user,img_file=img)
 
 if __name__=='__main__':
     app.run(debug=True)
-    
