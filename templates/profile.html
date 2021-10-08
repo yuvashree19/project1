@@ -1,10 +1,10 @@
 {%extends 'layout.html'%}
 {%block content%}
 <h1>PROFILE</h1>
-<img class='profile' src={{img_file}} alt='Default profile picture'>
+<img class='profile' src={{image_url}} alt='Default profile picture'>
 <form method='POST' action="/profile" enctype="multipart/form-data">
-    <label for='profile'>Update profile</label>
-    <input type="file" name='profile' id='profile'>
+    <label for='image'>Update profile</label>
+    <input type="file" name='image' id='image'>
     <button type="submit">Update Profile</button>
 
 </form>

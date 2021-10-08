@@ -23,7 +23,7 @@ class User(db.Model,UserMixin):
     name=db.Column(db.String(100),nullable=True)
     email=db.Column(db.String(100),unique=True)
     password=db.Column(db.String(100))
-    profile=db.Column(db.String(20),unique=True,nullable=False,default='default.jpg')
+    profile=db.Column(db.String(100),unique=True,nullable=False,default='default.jpg')
     notes=db.relationship('Notes')
     
 class Notes(db.Model):
@@ -33,6 +33,10 @@ class Notes(db.Model):
 class Posts(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     posts=db.Column(db.String(500))
+class Profile(db.Model):
+    id=db.Column(db.Integer,primary_key=True)
+    image=db.Column(db.Text,nullable=False)
+    name=db.Column(db.Text,nullable=False)
 
 
 def create(app):
@@ -140,23 +144,22 @@ def cgpa():
             return redirect(url_for('notes'))
     return render_template('calculator.html',user=current_user)
 def save_picture(form_picture):
-    random_hex=secrets.token_hex(8)
-    filename,fileextension=os.path.splitext(form_picture.filename)
-    picture_filename=random_hex+fileextension
-    picture_path=os.path.join(app.root_path,'static/profile_images',picture_filename)
+    picture_name=form_picture.filename
+    picture_path=os.path.join(app.root_path,'static/profile_images',picture_name)
     form_picture.save(picture_path)
-    return picture_filename
+    return picture_name
 
 @app.route('/profile',methods=['GET','POST'])
 def profile():
     if request.method=='POST':
-        picture=request.files['profile']
-        picture_file=save_picture(picture.data)
-        current_user.profile=picture_file
-        db.commit()
-    elif request.method=='GET':
-        img=url_for('static',filename='images/'+ current_user.profile)
-    return render_template('profile.html', user=current_user,img_file=img)
+        file = request.files['image']
+        filename=secure_filename(file.filename)
+        img_file=save_picture(file)
+        current_user.profile=img_file
+        db.session.commit()
+        return redirect(url_for('profile'))
+    image_url=url_for('static',filename='profile_images/'+current_user.profile)
+    return render_template('profile.html', user=current_user,image_url=image_url)
 
 if __name__=='__main__':
     app.run(debug=True)
