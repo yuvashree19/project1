@@ -1,0 +1,17 @@
+{%extends 'layout.html'%}
+{%block content%}
+<h1>Update your profile</h1>
+<form method='POST' action='/update'>
+    <label for='gender'>Gender:</label>
+    <select id='gender' name='gender'>
+        <option value='Male'>Male</option>
+        <option value='Female'>Female</option>
+    </select>
+    <br><br>
+    <label for='number'>Phone Number:</label>
+    <input type='tel' name='number' id='number'>
+    <br>
+    <button type="submit">Update</button>
+
+</form>
+{%endblock%}

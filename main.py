@@ -24,6 +24,8 @@ class User(db.Model,UserMixin):
     email=db.Column(db.String(100),unique=True)
     password=db.Column(db.String(100))
     profile=db.Column(db.String(100),unique=True,nullable=False,default='default.jpg')
+    gender=db.Column(db.String(10))
+    phonenumber=db.Column(db.String(15))
     notes=db.relationship('Notes')
     
 class Notes(db.Model):
@@ -33,10 +35,6 @@ class Notes(db.Model):
 class Posts(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     posts=db.Column(db.String(500))
-class Profile(db.Model):
-    id=db.Column(db.Integer,primary_key=True)
-    image=db.Column(db.Text,nullable=False)
-    name=db.Column(db.Text,nullable=False)
 
 
 def create(app):
@@ -139,7 +137,7 @@ def cgpa():
     if request.method=='POST':
         regulation=request.form.get('regulation')
         if regulation=='Reg2017':
-            return redirect(url_for('home'))
+            return redirect(url_for('notes'))
         else:
             return redirect(url_for('notes'))
     return render_template('calculator.html',user=current_user)
@@ -153,13 +151,24 @@ def save_picture(form_picture):
 def profile():
     if request.method=='POST':
         file = request.files['image']
-        filename=secure_filename(file.filename)
         img_file=save_picture(file)
         current_user.profile=img_file
         db.session.commit()
         return redirect(url_for('profile'))
     image_url=url_for('static',filename='profile_images/'+current_user.profile)
     return render_template('profile.html', user=current_user,image_url=image_url)
+@app.route('/update',methods=['GET','POST'])
+def update():
+    if request.method=='POST':
+        gender=request.form.get('gender')
+        phonenumber=request.form.get('number')
+        current_user.gender=gender
+        current_user.phonenumber=phonenumber
+        db.session.commit()
+        
+        flash('Profile updated',category='success')
+        return redirect(url_for('home'))
 
+    return render_template('update.html',user=current_user)
 if __name__=='__main__':
     app.run(debug=True)
